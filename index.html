@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="wrapper">
+        <div class="content">
+        <div class="canvas-container">
+        <canvas id="canvas" width=500 height=500></canvas>
+        </div>
+
+        <div class="button-container">
+        <div class="content-container">
+        <button onclick="reset()">Ponastavi</button>
+        </div>
+        <div class="content-container">
+        <button onclick="grayscale()">Grayscale</button>
+        <button onclick="negative()">Negative</button>
+        </div>
+
+        <div class="content-container">
+        <button onclick="threshold()">Threshold</button>
+        <label for="threshold-value">Vrednost</label>
+        <input class="slider" id="threshold-value" name="threshold-value" type="range" min="0"  max="255"><br>
+        <label for="threshold-mode">Avtomatsko določanje</label>
+        <input type="checkbox" name="threshold-mode" id="threshold-mode">
+        <br>
+        </div>
+
+        <div class="content-container">
+        <label for="gamma">Gamma </label><input class="slider" name="gamma" id="gamma" type="range" min="0.5" max="8.5" value="1" onchange="gamma(this)"><br>
+        </div>
+
+        <div class="content-container">
+        <label for="red">Rdeča </label><input class="slider" name="red" type="range" min="0" max="255" value="1" onchange="red(this)"><br>
+        <label for="modra">Modra </label><input class="slider" name="modra" type="range" min="0" max="255" value="1" onchange="blue(this)"><br>
+        <label for="zelena">Zelena </label><input class="slider" name="zelena" type="range" min="0" max="255" value="1" onchange="green(this)">
+        </div>
+
+        <div class="content-container">
+            <label>Matrice</label>
+            
+            <div class="matrix-input">
+            <input type=number id="-1,1">
+            <input type=number id="0,1">
+            <input type=number id="1,1">
+            <br>
+            <input type=number id="-1,0">
+            <input type=number id="0,0">
+            <input type=number id="1,0">
+            <br>
+            <input type=number id="-1,-1">
+            <input type=number id="0,-1">
+            <input type=number id="1,-1">
+            </div>
+            <input class="matrix-divider" id="divider" type=number>
+            <button style="margin-bottom:20px;" onclick="matrix([
+            document.getElementById('-1,1').value,
+            document.getElementById('0,1').value,
+            document.getElementById('1,1').value,
+            document.getElementById('-1,0').value,
+            document.getElementById('0,0').value,
+            document.getElementById('1,0').value,
+            document.getElementById('-1,-1').value,
+            document.getElementById('0,-1').value,
+            document.getElementById('-1,-1').value,],
+            document.getElementById('divider').value)">Apply matrix</button>
+
+            <button onclick="matrix([1,1,1,1,1,1,1,1,1],9)">Box blur</button>
+            <button onclick="matrix([1,2,1,2,4,2,1,2,1],16)">Gaussian blur</button>
+            <button onclick="matrix([0,-1,0,-1,5,-1,0,-1,0],1)">Sharpen</button>
+            <button onclick="matrix([1,0,-1,2,0,-2,1,0,-1],1)">Sobel</button>
+            <button onclick="matrix([0,-1,0,-1,4,-1,0,-1,0],1)">Laplace</button>
+        </div>
+
+        <div class="content-container">
+        <label for="image_upload" class="file_upload">Custom Upload</label>
+        <input accept=".jpg,.png,.jpeg" id="image_upload" type="file" style="display:none">
+        </div>
+
+        <script src="imgProcessing.js"></script>
+        </div>
+        </div>
+    </body>
+</html>
