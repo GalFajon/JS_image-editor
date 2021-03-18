@@ -219,5 +219,89 @@ function matrix(matrix,divider) {
         }
     }
 
-    context.putImageData(imageDataCopy,1,1)
+    context.putImageData(imageDataCopy,0,0)
+}
+
+function median() {
+        imageData = context.getImageData(0,0,slika.width,slika.height);
+        let imageDataCopy = context.getImageData(0,0,slika.width,slika.height);
+    
+        let x=slika.width;
+        let y=slika.height;
+    
+        for (let i = 0;i<=x*4;i+=4) {
+            for (let j = 0;j<=y*4;j+=4) {
+    
+            let r_array = [];
+            let g_array = [];
+            let b_array = [];
+    
+            for (let minusy=-4;minusy <= 4;minusy+=4) {
+                for (let minusx=-4;minusx <= 4;minusx+=4) {
+
+                    let r_value = imageData.data[(i+minusx)+((j+minusy)*slika.width)];
+                    let g_value = imageData.data[(i+minusx)+((j+minusy)*slika.width)+1]; 
+                    let b_value = imageData.data[(i+minusx)+((j+minusy)*slika.width)+2]
+
+                    if (r_value != undefined) r_array.push(r_value);
+                    if (g_value != undefined) g_array.push(g_value);
+                    if (b_value != undefined) b_array.push(b_value);
+                    
+                }
+            }
+                r_array.sort((a, b) => a - b);
+                g_array.sort((a, b) => a - b);
+                b_array.sort((a, b) => a - b);
+                
+                let median = array_median(r_array);
+                imageDataCopy.data[(i)+(j*slika.width)] = r_array[median];
+
+                median = array_median(g_array);
+                imageDataCopy.data[(i)+(j*slika.width)+1] = g_array[median];
+
+                median = array_median(b_array);
+                imageDataCopy.data[(i)+(j*slika.width)+2] = b_array[median];
+            }
+    }
+    context.putImageData(imageDataCopy,0,0)
+}
+
+function array_median(array) {
+    if (array.lenght == 0) {
+        return 0
+    }
+    else if (array.length % 2 == 0) {
+        return array.lenght / 2
+    }
+    else {
+        return (Math.floor(array.length/2) + 1)
+    }
+}
+
+function combine_images() {    
+    let slika_2 = new Image();
+    slika_2.src = URL.createObjectURL(document.getElementById('combine_upload').files[0]); 
+
+    slika_2.onload = function() {
+    let imageData_1 = context.getImageData(0,0,slika.width,slika.height);
+    let imageDataCopy = context.getImageData(0,0,slika.width,slika.height);
+    let v_canvas = document.createElement('canvas');
+    v_canvas.width = slika_2.width;
+    v_canvas.height = slika_2.height;
+
+    let v_context = v_canvas.getContext('2d');
+    v_context.drawImage(slika_2, 0, 0);
+
+    let imageData_2 = v_context.getImageData(0,0,slika_2.width,slika_2.height);
+
+    for (let i=0;i<imageData_1.data.length;i+=4) {
+        imageDataCopy.data[i] = (imageData_1.data[i] + imageData_2.data[i]);
+        imageDataCopy.data[i+1] = imageData_1.data[i+1] + imageData_2.data[i+1];
+        imageDataCopy.data[i+2] = imageData_1.data[i+2] + imageData_2.data[i+2];
+        
+        imageDataCopy.data[i+3] = 128;  
+    }
+
+    context.putImageData(imageDataCopy,0,0);
+    }
 }

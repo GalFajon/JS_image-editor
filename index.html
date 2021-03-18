@@ -11,11 +11,11 @@
 
         <div class="button-container">
         <div class="content-container">
-        <button onclick="reset()">Ponastavi</button>
+            <button onclick="reset()">Ponastavi</button>
         </div>
         <div class="content-container">
-        <button onclick="grayscale()">Grayscale</button>
-        <button onclick="negative()">Negative</button>
+            <button onclick="grayscale()">Grayscale</button>
+            <button onclick="negative()">Negative</button>
         </div>
 
         <div class="content-container">
@@ -72,12 +72,19 @@
             <button onclick="matrix([1,0,-1,2,0,-2,1,0,-1],1)">Sobel</button>
             <button onclick="matrix([0,-1,0,-1,4,-1,0,-1,0],1)">Laplace</button>
         </div>
-
         <div class="content-container">
-        <label for="image_upload" class="file_upload">Custom Upload</label>
-        <input accept=".jpg,.png,.jpeg" id="image_upload" type="file" style="display:none">
+            <button onclick="median()">Median</button>
         </div>
-
+        <div class="content-container">
+            <label for="combine_upload" class="file_upload">Combine images</label>
+            <input onchange="combine_images()" accept=".jpg,.png,.jpeg" id="combine_upload" type="file" style="display:none">
+        </div>
+        
+        <div class="content-container">
+            <label for="image_upload" class="file_upload">Custom Upload</label>
+            <input accept=".jpg,.png,.jpeg" id="image_upload" type="file" style="display:none">
+        </div>
+    </div>
         <script src="imgProcessing.js"></script>
         </div>
         </div>
