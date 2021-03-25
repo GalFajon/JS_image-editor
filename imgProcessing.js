@@ -35,7 +35,7 @@ document.body.onload = function () {
     context = canvas.getContext("2d");
     fileupload = document.getElementById("image_upload");
 
-    slika.src="test.jpg";
+    slika.src="https://www.protagon.gr/wp-content/uploads/2017/03/63984-141726.jpg";
 
     fileupload.onchange = function() {uploadSlika(fileupload)};
 }
@@ -304,4 +304,59 @@ function combine_images() {
 
     context.putImageData(imageDataCopy,0,0);
     }
+}
+
+function unsharp_mask() {
+    imageData = context.getImageData(0,0,slika.width,slika.height);
+    let imageDataCopy = context.getImageData(0,0,slika.width,slika.height);
+    let divider = 9;
+    let matrix = [1,1,1,1,1,1,1,1,1];
+    let x=slika.width;
+    let y=slika.height;
+
+    for (let i = 0;i<=x*4;i+=4) {
+    for (let j = 0;j<=y*4;j+=4) {
+
+        let average_r = 0;
+        let average_g = 0;
+        let average_b = 0;
+
+        let currentpixel = 0;
+
+        for (let minusy=-4;minusy <= 4;minusy+=4) {
+            for (let minusx=-4;minusx <= 4;minusx+=4) {
+                average_r += imageData.data[(i+minusx)+((j+minusy)*slika.width)] * matrix[currentpixel];
+                average_g += imageData.data[(i+minusx)+((j+minusy)*slika.width)+1] * matrix[currentpixel];
+                average_b += imageData.data[(i+minusx)+((j+minusy)*slika.width)+2] * matrix[currentpixel];
+
+                currentpixel++;
+            }
+        }
+        
+        average_r = average_r/divider;
+        average_g = average_g/divider;
+        average_b = average_b/divider;
+
+
+        imageDataCopy.data[(i)+(j*slika.width)] = average_r;
+        imageDataCopy.data[(i)+(j*slika.width)+1] = average_g;
+        imageDataCopy.data[(i)+(j*slika.width)+2] = average_b;
+        }
+    }
+    
+    let ThirdImageDataCopy = context.getImageData(0,0,slika.width,slika.height);
+
+    for (let i=0;i < imageData.data.length;i+=4) {
+        imageData.data[i]-=imageDataCopy.data[i];
+        imageData.data[i+1]-=imageDataCopy.data[i+1];
+        imageData.data[i+2]-=imageDataCopy.data[i+2];
+    }
+    
+    for (let i=0;i < imageData.data.length;i+=4) {
+        ThirdImageDataCopy.data[i]+=imageData.data[i];
+        ThirdImageDataCopy.data[i+1]+=imageData.data[i+1];
+        ThirdImageDataCopy.data[i+2]+=imageData.data[i+2];
+    }
+
+    context.putImageData(ThirdImageDataCopy,0,0);
 }

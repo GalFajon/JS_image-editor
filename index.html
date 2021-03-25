@@ -1,60 +1,78 @@
 <html>
     <head>
-        <link rel="stylesheet" href="style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+		<script src="./bootstrap/jquery/jquery.min.js"></script>
+		<script src="./bootstrap/popper/popper.min.js"></script>
+		<script src="./bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="custom-styles.css">
     </head>
     <body>
-        <div class="wrapper">
-        <div class="content">
-        <div class="canvas-container">
-        <canvas id="canvas" width=500 height=500></canvas>
-        </div>
-
-        <div class="button-container">
-        <div class="content-container">
-            <button onclick="reset()">Ponastavi</button>
-        </div>
-        <div class="content-container">
-            <button onclick="grayscale()">Grayscale</button>
-            <button onclick="negative()">Negative</button>
-        </div>
-
-        <div class="content-container">
-        <button onclick="threshold()">Threshold</button>
-        <label for="threshold-value">Vrednost</label>
-        <input class="slider" id="threshold-value" name="threshold-value" type="range" min="0"  max="255"><br>
-        <label for="threshold-mode">Avtomatsko določanje</label>
-        <input type="checkbox" name="threshold-mode" id="threshold-mode">
-        <br>
-        </div>
-
-        <div class="content-container">
-        <label for="gamma">Gamma </label><input class="slider" name="gamma" id="gamma" type="range" min="0.5" max="8.5" value="1" onchange="gamma(this)"><br>
-        </div>
-
-        <div class="content-container">
-        <label for="red">Rdeča </label><input class="slider" name="red" type="range" min="0" max="255" value="1" onchange="red(this)"><br>
-        <label for="modra">Modra </label><input class="slider" name="modra" type="range" min="0" max="255" value="1" onchange="blue(this)"><br>
-        <label for="zelena">Zelena </label><input class="slider" name="zelena" type="range" min="0" max="255" value="1" onchange="green(this)">
-        </div>
-
-        <div class="content-container">
-            <label>Matrice</label>
-            
-            <div class="matrix-input">
-            <input type=number id="-1,1">
-            <input type=number id="0,1">
-            <input type=number id="1,1">
-            <br>
-            <input type=number id="-1,0">
-            <input type=number id="0,0">
-            <input type=number id="1,0">
-            <br>
-            <input type=number id="-1,-1">
-            <input type=number id="0,-1">
-            <input type=number id="1,-1">
+        <div class="container">
+            <div class="row" style="height:100vh;">
+            <div class="col-sm my-auto">
+            <canvas id="canvas" class="custom-canvas" width=500 height=500></canvas>
             </div>
-            <input class="matrix-divider" id="divider" type=number>
-            <button style="margin-bottom:20px;" onclick="matrix([
+            <div class="col-sm my-auto overflow-auto" style="height:55vh;">
+            <div id="accordion" class="card-header">
+            <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseFiltri" aria-expanded="true" aria-controls="collapseFiltri">Filtri</button>
+            </div>
+            <div id="collapseFiltri" class="collapse mb-2" data-parent="#accordion">
+            <div class="row mt-3">
+            <div class="col-sm m-3">
+            <button class="w-100 btn btn-dark" onclick="grayscale()">Grayscale</button>
+            </div>
+            <div class="col-sm m-3">
+            <button class="w-100 btn btn-dark" onclick="negative()">Negative</button>
+            </div>
+            <div class="col-sm m-3">
+            <button class="w-100 btn btn-dark" onclick="threshold()">Threshold</button>
+            </div>
+            </div>
+            <br>
+            <label clasS="text-light" for="threshold-value">Vrednost</label>
+            <input class="custom-slider" id="threshold-value" name="threshold-value" type="range" min="0"  max="255"><br>
+            <br>
+            <input type="checkbox" class="ml-2" name="threshold-mode" id="threshold-mode">
+            <label for="threshold-mode" class="ml-2 text-light">Avtomatsko določanje</label>
+            </div>
+
+            <div id="accordion" class="card-header">
+            <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseVrednosti" aria-expanded="true" aria-controls="collapseVrednosti">Vrednosti</button>
+            </div>
+            <div id="collapseVrednosti" class="collapse mb-4" data-parent="#accordion">
+            <label class="text-light" for="gamma">Gamma </label><input class="custom-slider" name="gamma" id="gamma" type="range" min="0.5" max="8.5" value="1" onchange="gamma(this)"><br>
+            <label class="text-light" for="red">Rdeča </label><input class="custom-slider" name="red" type="range" min="0" max="255" value="1" onchange="red(this)"><br>
+            <label class="text-light" for="modra">Modra </label><input class="custom-slider" name="modra" type="range" min="0" max="255" value="1" onchange="blue(this)"><br>
+            <label class="text-light" for="zelena">Zelena </label><input class="custom-slider" name="zelena" type="range" min="0" max="255" value="1" onchange="green(this)">
+            </div>
+
+            <div id="accordion" class="card-header">
+                <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseCustomMatrice" aria-expanded="true" aria-controls="collapseCustomMatrice">Custom Matrica</button>
+            </div>
+            <div id="collapseCustomMatrice" class="collapse mt-1" data-parent="#accordion">
+            <label class="text-light">Matrice</label>
+            
+            <div class="form-row mb-2">
+            <div class="col"><input class="form-control" type=number id="-1,1"></div>
+            <div class="col"><input class="form-control" type=number id="0,1"></div>
+            <div class="col"><input class="form-control" type=number id="1,1"></div>
+            </div>
+            <div class="form-row mb-2">
+            <div class="col"><input class="form-control" type=number id="-1,0"></div>
+            <div class="col"><input class="form-control" type=number id="0,0"></div>
+            <div class="col"><input class="form-control" type=number id="1,0"></div>
+            </div>
+            <div class="form-row">
+            <div class="col"><input class="form-control" type=number id="-1,-1"></div>
+            <div class="col"><input class="form-control" type=number id="0,-1"></div>
+            <div class="col"><input class="form-control" type=number id="1,-1"></div>
+            </div>
+
+            <input class="form-control mt-3 w-100" id="divider" type=number placeholder="Divider...">
+            <button class="btn btn-dark mt-3" style="margin-bottom:20px;" onclick="matrix([
             document.getElementById('-1,1').value,
             document.getElementById('0,1').value,
             document.getElementById('1,1').value,
@@ -65,27 +83,58 @@
             document.getElementById('0,-1').value,
             document.getElementById('-1,-1').value,],
             document.getElementById('divider').value)">Apply matrix</button>
+            </div>
+            <div id="accordion" class="card-header">
+                <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseMatrice" aria-expanded="true" aria-controls="collapseMatrice">Matrice</button>
+            </div>
+            <div id="collapseMatrice" class="collapse" data-parent="#accordion">
+            <div class="form-row">
+            <div class="col-sm m-3"><button class="btn btn-dark w-100" onclick="matrix([1,1,1,1,1,1,1,1,1],9)">Box blur</button></div>
+            <div class="col-sm m-3"><button class="btn btn-dark w-100" onclick="matrix([1,2,1,2,4,2,1,2,1],16)">Gaussian blur</button></div>
+            </div>
 
-            <button onclick="matrix([1,1,1,1,1,1,1,1,1],9)">Box blur</button>
-            <button onclick="matrix([1,2,1,2,4,2,1,2,1],16)">Gaussian blur</button>
-            <button onclick="matrix([0,-1,0,-1,5,-1,0,-1,0],1)">Sharpen</button>
-            <button onclick="matrix([1,0,-1,2,0,-2,1,0,-1],1)">Sobel</button>
-            <button onclick="matrix([0,-1,0,-1,4,-1,0,-1,0],1)">Laplace</button>
-        </div>
-        <div class="content-container">
-            <button onclick="median()">Median</button>
-        </div>
-        <div class="content-container">
-            <label for="combine_upload" class="file_upload">Combine images</label>
+            <div class="form-row">
+                <div class="col-sm m-3"><button class="btn btn-dark w-100" onclick="matrix([0,-1,0,-1,5,-1,0,-1,0],1)">Sharpen</button></div>
+                <div class="col-sm m-3"><button class="btn btn-dark w-100" onclick="median()">Median</button></div>
+            </div>
+
+            <div class="form-row">
+                <div class="col-sm m-3"><button class="btn btn-dark w-100" onclick="matrix([1,0,-1,2,0,-2,1,0,-1],1)">Sobel</button></div>
+                <div class="col-sm m-3"><button class="btn btn-dark w-100" onclick="matrix([0,-1,0,-1,4,-1,0,-1,0],1)">Laplace</button></div>
+            </div>
+            </div>
+
+            <div id="accordion" class="card-header">
+                <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseKombinacija" aria-expanded="true" aria-controls="collapseKombinacija">Kombiniraj slike</button>
+            </div>
+            <div id="collapseKombinacija" class="collapse" data-parent="#accordion">
+            <div class="form-row">
+            <label for="combine_upload" class="btn btn-dark w-100 m-3">Combine images</label>
             <input onchange="combine_images()" accept=".jpg,.png,.jpeg" id="combine_upload" type="file" style="display:none">
+            </div>
+            </div>
+
+            <div id="accordion" class="card-header">
+                <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseMask" aria-expanded="true" aria-controls="collapseMask">Unsharp Mask</button>
+            </div>
+            <div id="collapseMask" class="collapse" data-parent="#accordion">
+            <div class="form-row">
+            <input class="btn btn-dark w-100 m-3" onclick="unsharp_mask()" type="button" value="Unsharp mask">
+            </div>
+            </div>
+
+            <div class="mt-3 row">
+            <div class="col">
+            <button class="btn btn-dark w-100" onclick="reset()">Ponastavi</button>
+            </div>
+            <div class="col">
+            <label for="image_upload" class="btn btn-dark w-100">Custom Upload</label>
+            <input accept=".jpg,.png,.jpeg" id="image_upload" type="file" class="d-none">
+            </div>
+            </div>
+            <script src="imgProcessing.js"></script>
         </div>
-        
-        <div class="content-container">
-            <label for="image_upload" class="file_upload">Custom Upload</label>
-            <input accept=".jpg,.png,.jpeg" id="image_upload" type="file" style="display:none">
         </div>
-    </div>
-        <script src="imgProcessing.js"></script>
         </div>
         </div>
     </body>
