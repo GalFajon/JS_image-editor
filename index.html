@@ -10,12 +10,31 @@
         <link rel="stylesheet" href="custom-styles.css">
     </head>
     <body>
+        <script src="imgProcessing.js"></script>
         <div class="container">
             <div class="row" style="height:100vh;">
             <div class="col-sm my-auto">
             <canvas id="canvas" class="custom-canvas" width=500 height=500></canvas>
             </div>
             <div class="col-sm my-auto overflow-auto" style="height:55vh;">
+                <div class="card mt-3 p-2 bg-dark mb-3">
+                    <h3 class="justify-content-center d-flex text-light">Pravokotnik izbire</h3>
+                    <div class="form-row">
+                        <div class="col">
+                            <label class="text-light">Začetna točka</label>
+                            <input id="zx" placeholder="X" class="form-control mt-2" type="number">
+                            <input id="zy" placeholder="Y" class="form-control mt-2" type="number">
+                        </div>
+                        <div class="col">
+                            <label class="text-light">Končna točka</label>
+                            <input id="kx" placeholder="X" class="form-control mt-2" type="number">
+                            <input id="ky" placeholder="Y" class="form-control mt-2" type="number">
+                </div>
+            </div>
+            <label class="text-light">Za označevanje izbire lahko uporabite tudi miško.</label>
+            <button id="tocka-reset" class="btn btn-secondary w-100 mt-3">Ponastavi</button>
+            </div>
+
             <div id="accordion" class="card-header">
             <button class="btn btn-link text-light" data-toggle="collapse" data-target="#collapseFiltri" aria-expanded="true" aria-controls="collapseFiltri">Filtri</button>
             </div>
@@ -132,7 +151,6 @@
             <input accept=".jpg,.png,.jpeg" id="image_upload" type="file" class="d-none">
             </div>
             </div>
-            <script src="imgProcessing.js"></script>
         </div>
         </div>
         </div>
