@@ -115,6 +115,34 @@ document.body.onload = function () {
     slika.src="https://www.protagon.gr/wp-content/uploads/2017/03/63984-141726.jpg";
 
     fileupload.onchange = function() {uploadSlika(fileupload)};
+
+    document.getElementById('tocka-reset').addEventListener("click", function() {
+        start_point.x = 0;
+        document.getElementById("zx").value = 0;
+        start_point.y = 0;
+        document.getElementById("zy").value = 0;
+    
+        end_point.x = slika.width;
+        document.getElementById("kx").value = slika.width;
+        end_point.y = slika.height;
+        document.getElementById("ky").value = slika.height;
+    })
+    
+    document.getElementById('zx').addEventListener("change", function() {
+        start_point.x = document.getElementById('zx').value;
+    });
+    
+    document.getElementById('zy').addEventListener("change", function() {
+        start_point.y = document.getElementById('zy').value;
+    });
+    
+    document.getElementById('kx').addEventListener("change", function() {
+        end_point.x = document.getElementById('kx').value;
+    });
+    
+    document.getElementById('ky').addEventListener("change", function() {
+        end_point.y = document.getElementById('ky').value;
+    });
 }
 
 //setsliders
@@ -457,31 +485,3 @@ function unsharp_mask() {
 
     context.putImageData(ThirdImageDataCopy,0,0);
 }
-
-document.getElementById('tocka-reset').addEventListener("click", function() {
-    start_point.x = 0;
-    document.getElementById("zx").value = 0;
-    start_point.y = 0;
-    document.getElementById("zy").value = 0;
-
-    end_point.x = slika.width;
-    document.getElementById("kx").value = slika.width;
-    end_point.y = slika.height;
-    document.getElementById("ky").value = slika.height;
-})
-
-document.getElementById('zx').addEventListener("change", function() {
-    start_point.x = document.getElementById('zx').value;
-});
-
-document.getElementById('zy').addEventListener("change", function() {
-    start_point.y = document.getElementById('zy').value;
-});
-
-document.getElementById('kx').addEventListener("change", function() {
-    end_point.x = document.getElementById('kx').value;
-});
-
-document.getElementById('ky').addEventListener("change", function() {
-    end_point.y = document.getElementById('ky').value;
-});
